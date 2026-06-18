@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { ArrowRight, Loader2, Mail, Phone, MapPin, Instagram } from "lucide-react";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://sunwest-builds-website.onrender.com";
 const API = `${BACKEND_URL}/api`;
 
 const initial = { name: "", email: "", phone: "", project_details: "" };

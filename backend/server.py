@@ -37,7 +37,8 @@ class StatusCheck(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc))
 
 
 class StatusCheckCreate(BaseModel):
@@ -58,7 +59,8 @@ class ContactLead(BaseModel):
     email: EmailStr
     phone: str
     project_details: str
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc))
 
 
 # ---------- Routes ----------
@@ -101,7 +103,8 @@ async def create_contact_lead(payload: ContactLeadCreate):
         await db.contact_leads.insert_one(doc)
     except Exception as exc:  # pragma: no cover - boundary
         logger.exception("Failed to persist contact lead")
-        raise HTTPException(status_code=500, detail="Could not save lead") from exc
+        raise HTTPException(
+            status_code=500, detail="Could not save lead") from exc
 
     # Structured log — ready for Resend / mail dispatcher hookup
     logger.info(
@@ -123,13 +126,20 @@ async def list_contact_leads():
 # Include the router in the main app
 app.include_router(api_router)
 
+# Explicitly defining permitted development and production domains
+raw_origins = os.environ.get(
+    'CORS_ORIGINS', 'https://sunwestbuilds.com,https://www.sunwestbuilds.com,http://localhost:3000')
+origins = [origin.strip()
+           for origin in raw_origins.split(',') if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
+    allow_origins=origins,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

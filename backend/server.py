@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
+import resend
 
 
 ROOT_DIR = Path(__file__).parent
@@ -18,6 +19,11 @@ load_dotenv(ROOT_DIR / '.env')
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
+
+# Resend (email) configuration
+resend.api_key = os.environ.get('RESEND_API_KEY')
+LEAD_NOTIFY_TO = os.environ.get('LEAD_NOTIFY_TO', 'info@sunwestbuilds.com')
+LEAD_NOTIFY_FROM = os.environ.get('LEAD_NOTIFY_FROM')
 
 logging.basicConfig(
     level=logging.INFO,
@@ -63,6 +69,41 @@ class ContactLead(BaseModel):
         default_factory=lambda: datetime.now(timezone.utc))
 
 
+# ---------- Helpers ----------
+def send_lead_notification_email(lead: ContactLead) -> None:
+    """
+    Sends a notification email to the business when a new lead comes in.
+    Failures here are logged but never raised — a flaky email send should
+    never cause the lead (already safely saved in Mongo) to be lost or
+    reported as a failure to the website visitor.
+    """
+    if not resend.api_key or not LEAD_NOTIFY_FROM:
+        logger.warning(
+            "Skipping lead notification email: RESEND_API_KEY or "
+            "LEAD_NOTIFY_FROM not configured."
+        )
+        return
+
+    try:
+        resend.Emails.send({
+            "from": LEAD_NOTIFY_FROM,
+            "to": LEAD_NOTIFY_TO,
+            "reply_to": lead.email,
+            "subject": f"New website lead: {lead.name}",
+            "html": (
+                "<h2>New contact form submission</h2>"
+                f"<p><strong>Name:</strong> {lead.name}</p>"
+                f"<p><strong>Email:</strong> {lead.email}</p>"
+                f"<p><strong>Phone:</strong> {lead.phone}</p>"
+                f"<p><strong>Project details:</strong><br>{lead.project_details}</p>"
+            ),
+        })
+        logger.info("Lead notification email sent for id=%s", lead.id)
+    except Exception:
+        logger.exception(
+            "Failed to send lead notification email for id=%s", lead.id)
+
+
 # ---------- Routes ----------
 @api_router.get("/")
 async def root():
@@ -92,8 +133,8 @@ async def create_contact_lead(payload: ContactLeadCreate):
     """
     Lead-generation endpoint for the Sunwest Builds contact form.
 
-    Persists the lead to MongoDB AND logs the structured payload to the
-    server logs so it is ready to plug into Resend / SendGrid / CRM later.
+    Persists the lead to MongoDB, then sends a notification email via
+    Resend so the team sees new leads in their inbox right away.
     """
     lead = ContactLead(**payload.model_dump())
     doc = lead.model_dump()
@@ -106,11 +147,15 @@ async def create_contact_lead(payload: ContactLeadCreate):
         raise HTTPException(
             status_code=500, detail="Could not save lead") from exc
 
-    # Structured log — ready for Resend / mail dispatcher hookup
     logger.info(
         "NEW_CONTACT_LEAD id=%s name=%s email=%s phone=%s details_chars=%d",
         lead.id, lead.name, lead.email, lead.phone, len(lead.project_details),
     )
+
+    # Notify the business by email. Never blocks or fails the request --
+    # the lead is already safe in Mongo even if the email hiccups.
+    send_lead_notification_email(lead)
+
     return lead
 
 

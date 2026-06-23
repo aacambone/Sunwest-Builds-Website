@@ -48,7 +48,7 @@ function Reveal({ children, delay = 0, className = "" }) {
   );
 }
 
-// ─── Animated credential cell ────────────────────────────────────────────────
+// ─── Animated credential cell (SEO Optimized with DL tags) ───────────────────
 function Credential({ label, value, delay }) {
   const [ref, inView] = useInView({ threshold: 0.4 });
   return (
@@ -59,15 +59,17 @@ function Credential({ label, value, delay }) {
         transform: inView ? "translateY(0)" : "translateY(14px)",
         transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
       }}
+      className="flex flex-col"
     >
-      <div
+      <dt
         className="text-xs uppercase tracking-[0.22em]"
         style={{ color: "#A09080" }}
       >
         {label}
-      </div>
+      </dt>
       {/* Accent line grows in after the cell appears */}
       <div
+        aria-hidden="true"
         className="h-px my-2.5"
         style={{
           backgroundColor: "#C9802A",
@@ -75,19 +77,20 @@ function Credential({ label, value, delay }) {
           transition: `width 0.6s ease ${delay + 200}ms`,
         }}
       />
-      <div className="text-sm font-medium" style={{ color: "#1A1A1A" }}>
+      <dd className="text-sm font-medium m-0" style={{ color: "#1A1A1A" }}>
         {value}
-      </div>
+      </dd>
     </div>
   );
 }
 
+// ─── SEO Optimized Credentials Data ──────────────────────────────────────────
 const credentials = [
   ["Experience", "10+ Years Corporate"],
   ["Education", "George Brown College"],
-  ["Specialty", "Structural Finishing"],
-  ["Network", "Elite Sub-trades"],
-  ["Region", "GTA & Surroundings"],
+  ["Specialty", "Structural Renovations"],
+  ["Network", "Elite Vaughan Sub-trades"],
+  ["Service Area", "GTA & Simcoe County"],
   ["Approach", "Owner On-Site"],
 ];
 
@@ -137,8 +140,8 @@ export default function Founder() {
                   className="font-display text-xl leading-snug tracking-tight"
                   style={{ color: "#2A2420" }}
                 >
-                  &ldquo;A lot of residential contractors operate by the seat of their pants.
-                  We run our renovations like a commercial site: Strict schedules, tight budgets,
+                  &ldquo;A lot of residential general contractors operate by the seat of their pants.
+                  We run our custom renovations like a commercial site: Strict schedules, tight budgets,
                   flawless execution, no surprises.&rdquo;
                 </p>
                 <footer
@@ -156,6 +159,7 @@ export default function Founder() {
 
             <Reveal>
               <div className="pt-6 mb-10" style={{ borderTop: "1px solid #DDD8D0" }}>
+                {/* Changed to H3 to maintain semantic hierarchy after the H2 above */}
                 <h3
                   className="font-display text-3xl font-medium tracking-tight"
                   style={{ color: "#1A1A1A" }}
@@ -166,7 +170,7 @@ export default function Founder() {
                   className="text-xs uppercase tracking-[0.2em] mt-2"
                   style={{ color: "#C9802A" }}
                 >
-                  Founder, Sunwest Builds
+                  General Contractor & Founder, Sunwest Builds
                 </p>
               </div>
             </Reveal>
@@ -174,8 +178,8 @@ export default function Founder() {
             {/* Bio — paragraph 1 */}
             <Reveal delay={60}>
               <p className="text-sm md:text-base leading-relaxed" style={{ color: "#5A5048" }}>
-                Inspired by his late grandfather's legacy in the building industry, Justin founded Sunwest Builds to carry the torch forward, building with the same care and craftsmanship that defined his grandfather's work. Justin holds an Advanced Diploma in Construction Engineering &amp; Management from
-                George Brown College and has been working in the construction sector for{" "}
+                Inspired by his late grandfather's legacy in the building industry, Justin founded Sunwest Builds to carry the torch forward, building custom homes with the same care and craftsmanship that defined his grandfather's work. Justin holds an Advanced Diploma in Construction Engineering &amp; Management from
+                George Brown College and has been working in the Toronto construction sector for{" "}
                 <span style={{ color: "#1A1A1A", fontWeight: 500 }}>over a decade</span>. After
                 graduating, he obtained pivotal roles as a Project Manager and Site Supervisor,
                 overseeing multi-million dollar projects for Canada&apos;s most prestigious developers.
@@ -186,11 +190,10 @@ export default function Founder() {
             <Reveal delay={60}>
               <p className="mt-6 text-sm md:text-base leading-relaxed" style={{ color: "#5A5048" }}>
                 Through many years managing complex, high-stakes projects, Justin has built a great
-                reputation with various consultants, architects, engineers, designers, sub-trades,
-                and mentors. This elite network and{" "}
+                reputation with various consultants, architects, engineers, designers, and local Vaughan sub-trades. This elite network and{" "}
                 <span style={{ color: "#1A1A1A", fontWeight: 500 }}>enterprise-level discipline</span>{" "}
-                have directly contributed to his success in the residential custom home and structural
-                renovation sector.
+                have directly contributed to his success in the luxury residential custom home and structural
+                renovation sector across the Greater Toronto Area and Simcoe County.
               </p>
             </Reveal>
 
@@ -209,13 +212,13 @@ export default function Founder() {
             <Reveal delay={60}>
               <p className="text-sm md:text-base leading-relaxed" style={{ color: "#5A5048" }}>
                 Anyone who knows Justin knows it. From consultant and client communications, to
-                emails, all the way to how pristine the sites are kept. These are just a few of the
-                traits he holds, fostering trust with his clients and building success in this industry.
+                emails, all the way to how pristine the project sites are kept. These are just a few of the
+                traits he holds, fostering trust with homeowners and building success in the contracting industry.
               </p>
             </Reveal>
 
-            {/* Credentials — staggered reveal with growing accent lines */}
-            <div
+            {/* Credentials — Converted to semantic <dl> list */}
+            <dl
               className="mt-12 pt-10 grid grid-cols-2 sm:grid-cols-3 gap-y-8 gap-x-6"
               style={{ borderTop: "1px solid #DDD8D0" }}
               data-testid="founder-credentials"
@@ -228,7 +231,7 @@ export default function Founder() {
                   delay={i * 90}
                 />
               ))}
-            </div>
+            </dl>
 
           </div>
         </div>

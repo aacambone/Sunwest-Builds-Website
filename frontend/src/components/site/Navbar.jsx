@@ -83,7 +83,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div
+        <nav
           data-testid="mobile-menu"
           className="md:hidden bg-white/95 backdrop-blur-xl border-t border-black/5"
         >
@@ -108,7 +108,7 @@ export default function Navbar() {
               Get a Quote
             </a>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );

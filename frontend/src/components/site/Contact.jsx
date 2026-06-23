@@ -61,7 +61,7 @@ export default function Contact() {
             <div className="flex items-center gap-3 mb-6">
               <span className="block w-10 h-px bg-brand-accent" />
               <span className="text-xs tracking-[0.28em] uppercase text-brand-smoke font-medium">
-                Start a Project
+                Start Your Project
               </span>
             </div>
             <h2
@@ -73,35 +73,36 @@ export default function Contact() {
               <span className="text-brand-smoke">that lasts.</span>
             </h2>
             <p className="mt-8 text-lg leading-relaxed text-brand-smoke max-w-md">
-              Share a few details about your project. We respond within one
-              business day with a scoped conversation.
+              Share a few details about your custom home or renovation project. We respond within one
+              business day to discuss your scope.
             </p>
 
-            <ul className="mt-12 space-y-5 text-sm" data-testid="contact-info">
-              <li className="flex items-center gap-3 text-brand-ink/80">
-                <Mail size={16} strokeWidth={1.5} className="text-brand-accent shrink-0" />
+            {/* Converted standard list to semantic Local Business Address */}
+            <address className="mt-12 space-y-5 text-sm not-italic" data-testid="contact-info">
+              <div className="flex items-center gap-3 text-brand-ink/80">
+                <Mail size={16} strokeWidth={1.5} className="text-brand-accent shrink-0" aria-hidden="true" />
                 <a
                   href="mailto:info@sunwestbuilds.com"
                   className="hover:text-brand-accent transition-colors"
                 >
                   info@sunwestbuilds.com
                 </a>
-              </li>
-              <li className="flex items-center gap-3 text-brand-ink/80">
-                <Phone size={16} strokeWidth={1.5} className="text-brand-accent shrink-0" />
+              </div>
+              <div className="flex items-center gap-3 text-brand-ink/80">
+                <Phone size={16} strokeWidth={1.5} className="text-brand-accent shrink-0" aria-hidden="true" />
                 <a
                   href="tel:+14167104718"
                   className="hover:text-brand-accent transition-colors"
                 >
                   (416) 710-4718
                 </a>
-              </li>
-              <li className="flex items-center gap-3 text-brand-ink/80">
-                <MapPin size={16} strokeWidth={1.5} className="text-brand-accent shrink-0" />
-                Greater Toronto Area &amp; Surroundings
-              </li>
-              <li className="flex items-center gap-3 text-brand-ink/80">
-                <Instagram size={16} strokeWidth={1.5} className="text-brand-accent shrink-0" />
+              </div>
+              <div className="flex items-center gap-3 text-brand-ink/80">
+                <MapPin size={16} strokeWidth={1.5} className="text-brand-accent shrink-0" aria-hidden="true" />
+                Servicing Vaughan, Toronto, Barrie &amp; the GTA
+              </div>
+              <div className="flex items-center gap-3 text-brand-ink/80">
+                <Instagram size={16} strokeWidth={1.5} className="text-brand-accent shrink-0" aria-hidden="true" />
                 <a
                   href="https://www.instagram.com/sunwestbuilds/"
                   target="_blank"
@@ -110,8 +111,8 @@ export default function Contact() {
                 >
                   @SunwestBuilds
                 </a>
-              </li>
-            </ul>
+              </div>
+            </address>
           </div>
 
           {/* Right: form */}
@@ -168,7 +169,7 @@ export default function Contact() {
               <div className="mt-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                 <p className="text-xs tracking-wide text-brand-muted max-w-xs">
                   We&apos;ll never share your details. Used solely to scope &amp;
-                  schedule.
+                  schedule your project.
                 </p>
                 <button
                   type="submit"
@@ -178,7 +179,7 @@ export default function Contact() {
                 >
                   {submitting ? (
                     <>
-                      <Loader2 size={18} className="animate-spin" />
+                      <Loader2 size={18} className="animate-spin" aria-hidden="true" />
                       Sending…
                     </>
                   ) : (
@@ -187,6 +188,7 @@ export default function Contact() {
                       <ArrowRight
                         size={18}
                         className="transition-transform duration-300 group-hover:translate-x-1"
+                        aria-hidden="true"
                       />
                     </>
                   )}
@@ -216,13 +218,16 @@ function Field({
   const border = error
     ? "border-b border-red-500"
     : "border-b border-brand-line focus:border-brand-accent";
+    
   return (
-    <label className="block">
-      <span className="block text-xs tracking-[0.22em] uppercase text-brand-muted font-medium mb-2">
+    <div className="block">
+      {/* Added explicit htmlFor attribute mapping to the input ID for Accessibility SEO */}
+      <label htmlFor={name} className="block text-xs tracking-[0.22em] uppercase text-brand-muted font-medium mb-2">
         {label}
-      </span>
+      </label>
       {textarea ? (
         <textarea
+          id={name}
           name={name}
           value={value}
           onChange={onChange}
@@ -232,6 +237,7 @@ function Field({
         />
       ) : (
         <input
+          id={name}
           type={type}
           name={name}
           value={value}
@@ -243,12 +249,13 @@ function Field({
       )}
       {error && (
         <span
+          id={`${name}-error`}
           data-testid={`${testid}-error`}
           className="block mt-2 text-xs text-red-500"
         >
           {error}
         </span>
       )}
-    </label>
+    </div>
   );
 }

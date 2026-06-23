@@ -165,28 +165,28 @@ export default function Hero() {
       {/* ─── Foreground content ─────────────────────────────────── */}
       <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-10 pt-40 pb-12 md:pb-16 flex flex-col items-start">
 
-        {/* Eyebrow with Inline Logo - Optically Aligned */}
+        {/* Eyebrow with Inline Logo - Optically Aligned & SEO Optimized */}
         <div className="reveal flex items-center gap-5 mb-8">
           <img
             src={mainLogo}
-            alt="Sunwest Builds"
+            alt="Sunwest Builds - General Contractors and Custom Home Builders in Vaughan"
             className="h-20 md:h-24 w-auto object-contain drop-shadow-lg -translate-y-2 md:-translate-y-3"
           />
           <span className="block w-10 md:w-16 h-px" style={{ backgroundColor: "#C9802A" }} />
-          <span className="text-sm tracking-[0.3em] uppercase font-medium text-white/65">
-            Est. Toronto
-          </span>
+          <h1 className="text-sm tracking-[0.3em] uppercase font-medium text-white/65 m-0">
+            Custom Home Builders in Vaughan
+          </h1>
         </div>
 
-        {/* Headline */}
-        <h1 className="reveal font-display font-medium tracking-tighter leading-[0.98] text-5xl md:text-7xl lg:text-8xl max-w-5xl [text-shadow:0_2px_30px_rgba(0,0,0,0.6)]">
+        {/* Headline - Downgraded to H2 to preserve design while keeping H1 focused on location */}
+        <h2 className="reveal font-display font-medium tracking-tighter leading-[0.98] text-5xl md:text-7xl lg:text-8xl max-w-5xl [text-shadow:0_2px_30px_rgba(0,0,0,0.6)]">
           <span className="block text-white">Commercial-Grade Precision.</span>
           <span className="block text-white/55">Residential Care.</span>
-        </h1>
+        </h2>
 
-        {/* Subtext */}
+        {/* Subtext - Expanded to catch secondary keywords */}
         <p className="reveal mt-8 text-lg md:text-xl leading-relaxed text-white/75 max-w-xl [text-shadow:0_1px_20px_rgba(0,0,0,0.7)]">
-          Bringing over a decade of development management to premium custom residential builds.
+          Bringing over a decade of development management to premium custom residential builds, high-end kitchen remodeling, and structural renovations across Vaughan and Toronto.
         </p>
 
         {/* CTAs */}
@@ -216,8 +216,8 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* ─── Stats row ─── */}
-        <div
+        {/* ─── Stats row - Converted to a semantic Description List (<dl>) ─── */}
+        <dl
           className="reveal mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 pt-10 w-full"
           style={{ borderTop: "1px solid rgba(255,255,255,0.12)" }}
           data-testid="hero-stats"
@@ -230,15 +230,15 @@ export default function Hero() {
           ].map(([value, label]) => (
             <div key={label} className="flex flex-col">
               <span className="block w-6 h-[2px] mb-4" style={{ backgroundColor: "#C9802A" }} />
-              <div className="font-display text-2xl md:text-3xl font-medium tracking-tight text-white leading-none">
+              <dd className="font-display text-2xl md:text-3xl font-medium tracking-tight text-white leading-none m-0">
                 <AnimatedCounter text={value} />
-              </div>
-              <div className="mt-3 text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/45">
+              </dd>
+              <dt className="mt-3 text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/45">
                 {label}
-              </div>
+              </dt>
             </div>
           ))}
-        </div>
+        </dl>
 
       </div>
     </section>

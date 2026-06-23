@@ -31,7 +31,7 @@ import pic26 from "../../images/pic26.jpeg";
 import pic27 from "../../images/pic27.jpeg";
 import pic28 from "../../images/pic28.jpeg";
 
-// ─── WORK CATEGORIES ─────────────────────────────────────────────────────────
+// ─── SEO OPTIMIZED WORK CATEGORIES ───────────────────────────────────────────
 const categories = [
     {
         id: "kitchens",
@@ -42,9 +42,11 @@ const categories = [
             "Cabinet-to-ceiling overhauls, custom millwork, continuous-vein stone surfaces, and structural wall removals that open kitchens to the living space. Every detail spec'd to the millimeter.",
         scope: "Full Kitchen Guts",
         timeline: "4–8 Weeks",
+        location: "Vaughan, ON",
         highlight: pic11,
-        gallery: [pic11, pic4, pic8, pic12,],
+        gallery: [pic11, pic4, pic8, pic12],
         accent: "#C9A96E",
+        altText: "Luxury custom kitchen renovation and custom millwork installation in Vaughan, Ontario.",
     },
     {
         id: "garages",
@@ -55,9 +57,11 @@ const categories = [
             "Epoxy floors, built-in cabinetry, and ceiling storage systems that convert raw garages into fully organized utility spaces. Clean lines. Zero clutter.",
         scope: "Full Garage Build-Outs",
         timeline: "2–4 Weeks",
+        location: "Barrie, ON",
         highlight: pic26,
-        gallery: [pic26,],
+        gallery: [pic26],
         accent: "#7EB8A4",
+        altText: "Complete garage build-out, epoxy flooring, and storage renovation in Barrie.",
     },
     {
         id: "living-spaces",
@@ -68,9 +72,11 @@ const categories = [
             "Accent walls, built-in shelving, and fireplace surrounds that unify fragmented main floors into one continuous, livable whole. Designed around how families actually use the space.",
         scope: "Main Floor Renovations",
         timeline: "3–6 Weeks",
+        location: "Toronto, ON",
         highlight: pic10,
-        gallery: [pic10, pic5, pic3, pic2,],
+        gallery: [pic10, pic5, pic3, pic2],
         accent: "#D4836A",
+        altText: "Main floor structural renovation and custom fireplace surround in Toronto.",
     },
     {
         id: "exteriors",
@@ -83,8 +89,9 @@ const categories = [
         timeline: "4–6 Weeks",
         location: "Springwater, ON",
         highlight: pic20,
-        gallery: [pic20, pic25, pic19,],
+        gallery: [pic20, pic25, pic19],
         accent: "#8FA8C8",
+        altText: "Complete exterior home transformation and custom siding installation in Springwater.",
     },
 ];
 
@@ -129,7 +136,7 @@ function Lightbox({ category, onClose }) {
                 <img
                     key={current}
                     src={all[current]}
-                    alt={`${category.eyebrow} photo ${current + 1}`}
+                    alt={`${category.altText} - Gallery Image ${current + 1}`}
                     className="max-h-full max-w-full object-contain"
                     style={{ animation: "fadeIn 0.2s ease" }}
                 />
@@ -159,6 +166,7 @@ function Lightbox({ category, onClose }) {
                                 ? "ring-2 ring-white opacity-100"
                                 : "opacity-40 hover:opacity-70"
                                 }`}
+                            aria-label={`View thumbnail ${i + 1}`}
                         >
                             <img src={src} alt="" className="w-full h-full object-cover" loading="lazy" />
                         </button>
@@ -177,32 +185,26 @@ function StackCard({ category, index, total, onOpenGallery }) {
     const reduce = useReducedMotion();
     const isLast = index === total - 1;
 
-    // Progress runs 0 → 1 across the window where THIS card is pinned and the
-    // NEXT card rises to cover it (start pinned → fully scrolled under).
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start start", "end start"],
     });
 
-    // Last card has nothing covering it, so it never scales/dims.
     const flat = reduce || isLast;
     const scale = useTransform(scrollYProgress, [0, 1], flat ? [1, 1] : [1, 0.95]);
     const opacity = useTransform(scrollYProgress, [0, 1], flat ? [1, 1] : [1, 0.8]);
 
     return (
         <div ref={ref} className="h-screen sticky top-0 flex items-center justify-center px-4 md:px-8">
-            <motion.div
+            <motion.article
                 style={{ scale, opacity }}
                 className="w-full max-w-7xl h-[82vh] max-h-[760px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col lg:flex-row group"
-            // Solid background so each card fully covers the one beneath
-            // (keeps everything crisp — nothing shows through)
-            // brand-charcoal-ish warm dark
             >
                 {/* ── Image side ───────────────────────────────────────── */}
                 <div className="relative lg:w-3/5 h-[45%] lg:h-full overflow-hidden bg-brand-charcoal">
                     <img
                         src={category.highlight}
-                        alt={category.eyebrow}
+                        alt={category.altText}
                         className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
                         loading="lazy"
                     />
@@ -220,13 +222,14 @@ function StackCard({ category, index, total, onOpenGallery }) {
                         {category.label}
                     </div>
 
-                    {/* Thumbnail strip overlay — only when there's more than the highlight to show */}
+                    {/* Thumbnail strip overlay */}
                     {category.gallery.length > 1 && (
                         <div className="absolute bottom-0 inset-x-0 p-3 flex gap-1.5">
                             {category.gallery.slice(0, 4).map((src, i) => (
                                 <button
                                     key={i}
                                     onClick={() => onOpenGallery(category)}
+                                    aria-label={`Open gallery to image ${i + 1}`}
                                     className="flex-1 aspect-video overflow-hidden bg-black/30 ring-1 ring-white/15 opacity-85 hover:opacity-100 transition-opacity duration-200"
                                 >
                                     <img src={src} alt="" className="w-full h-full object-cover" loading="lazy" />
@@ -266,26 +269,27 @@ function StackCard({ category, index, total, onOpenGallery }) {
                         {category.description}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-6 mb-8">
+                    {/* Converted grid to an SEO-friendly Description List */}
+                    <dl className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-6 mb-8">
                         <div>
-                            <p className="text-[11px] uppercase tracking-[0.25em] text-white/35 mb-1">Scope</p>
-                            <p className="text-sm font-medium text-white/85">{category.scope}</p>
+                            <dt className="text-[11px] uppercase tracking-[0.25em] text-white/35 mb-1">Scope</dt>
+                            <dd className="text-sm font-medium text-white/85 m-0">{category.scope}</dd>
                         </div>
                         <div>
-                            <p className="text-[11px] uppercase tracking-[0.25em] text-white/35 mb-1">Typical Timeline</p>
-                            <p className="text-sm font-medium text-white/85">{category.timeline}</p>
+                            <dt className="text-[11px] uppercase tracking-[0.25em] text-white/35 mb-1">Timeline</dt>
+                            <dd className="text-sm font-medium text-white/85 m-0">{category.timeline}</dd>
                         </div>
                         {category.location && (
                             <div>
-                                <p className="text-[11px] uppercase tracking-[0.25em] text-white/35 mb-1">Featured Location</p>
-                                <p className="text-sm font-medium text-white/85">{category.location}</p>
+                                <dt className="text-[11px] uppercase tracking-[0.25em] text-white/35 mb-1">Location</dt>
+                                <dd className="text-sm font-medium text-white/85 m-0">{category.location}</dd>
                             </div>
                         )}
                         <div>
-                            <p className="text-[11px] uppercase tracking-[0.25em] text-white/35 mb-1">Photos</p>
-                            <p className="text-sm font-medium text-white/85">{category.gallery.length} {category.gallery.length === 1 ? "image" : "images"}</p>
+                            <dt className="text-[11px] uppercase tracking-[0.25em] text-white/35 mb-1">Gallery</dt>
+                            <dd className="text-sm font-medium text-white/85 m-0">{category.gallery.length} {category.gallery.length === 1 ? "Image" : "Images"}</dd>
                         </div>
-                    </div>
+                    </dl>
 
                     <button
                         onClick={() => onOpenGallery(category)}
@@ -299,7 +303,7 @@ function StackCard({ category, index, total, onOpenGallery }) {
                         />
                     </button>
                 </div>
-            </motion.div>
+            </motion.article>
         </div>
     );
 }
@@ -325,7 +329,7 @@ export default function ProjectStudy() {
                             <div className="flex items-center gap-3 mb-6">
                                 <span className="block w-10 h-px bg-brand-accent" />
                                 <span className="text-xs tracking-[0.28em] uppercase text-white/50 font-medium">
-                                    Our Work
+                                    Project Portfolio
                                 </span>
                             </div>
                             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tighter">
@@ -333,7 +337,7 @@ export default function ProjectStudy() {
                             </h2>
                         </div>
                         <p className="text-white/55 text-base leading-relaxed max-w-xs">
-                            From kitchens to curb appeal. Explore our work across every part of the home.
+                            From custom kitchens to exterior framing. Explore our work across Vaughan, Toronto, and the GTA.
                         </p>
                     </motion.div>
                 </div>

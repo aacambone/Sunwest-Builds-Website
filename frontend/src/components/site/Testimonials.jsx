@@ -1,65 +1,69 @@
 import React, { useState, useRef } from "react";
 import { Plus } from "lucide-react";
 
-// ─── FAQ DATA ────────────────────────────────────────────────────────────────
+// ─── SEO OPTIMIZED FAQ DATA ──────────────────────────────────────────────────
 const faqs = [
   {
-    q: "How do you keep projects on schedule and on budget?",
-    a: "We run residential renovations with the same discipline used on commercial sites. That means critical-path scheduling, detailed scopes locked in before work begins, and fixed budgets agreed up front. You'll know your timeline and your number before we ever pick up a tool, and we communicate proactively if anything needs to change.",
+    q: "How do you keep custom home projects on schedule and on budget?",
+    a: "We run residential renovations and custom builds with the same discipline used on commercial sites. That means critical-path scheduling, detailed scopes locked in before work begins, and fixed budgets agreed up front. You'll know your timeline and your number before we ever pick up a tool, and we communicate proactively if anything needs to change.",
   },
   {
-    q: "Do you handle permits and inspections?",
-    a: "Yes. Permit applications, drawings coordination, and city inspections are all managed end-to-end as part of the project. Having spent years handling inspections on enterprise developments, we know how to keep this part of the process smooth and code-compliant.",
+    q: "Do you handle building permits and municipal inspections?",
+    a: "Yes. Permit applications, architectural drawing coordination, and city inspections across Vaughan, Toronto, and the GTA are all managed end-to-end. Having spent years handling inspections on enterprise developments, we know how to keep your residential project smooth and strictly code-compliant.",
   },
   {
-    q: "Will I be able to reach someone during my project?",
-    a: "Always. Justin is available nearly every day and is your direct point of contact throughout. No call centers, no being passed between people. Questions, updates, and concerns are answered quickly and directly.",
+    q: "Will I have a dedicated general contractor on-site?",
+    a: "Always. Justin is available nearly every day and is your direct point of contact throughout the entire renovation. No call centers, no being passed between people. Questions, updates, and structural concerns are answered quickly and directly by the owner.",
   },
   {
-    q: "What types of projects do you take on?",
-    a: "Full structural guts, interior remodels, kitchen and bathroom renovations, custom millwork, basement conversions, additions, and complete exterior transformations. If you're not sure whether your project is a fit, reach out. We're happy to talk through your scope.",
+    q: "What types of residential construction do you take on?",
+    a: "We specialize in full structural guts, load-bearing wall removals, luxury kitchen and bathroom renovations, custom millwork, basement conversions, and complete exterior transformations. If you're not sure whether your remodeling project is a fit, reach out. We're happy to talk through your scope.",
   },
   {
-    q: "How is pricing structured?",
-    a: "After an initial consultation and site assessment, you'll receive a detailed written quote broken down by scope. We believe in transparency: no vague estimates, no surprise charges mid-project. What you sign off on is what you pay, barring any changes you request along the way.",
+    q: "How is your renovation pricing structured?",
+    a: "After an initial consultation and site assessment, you'll receive a detailed written quote broken down by scope. We believe in transparency: no vague estimates, no surprise charges mid-project. What you sign off on is what you pay for your custom build, barring any changes you request along the way.",
   },
   {
-    q: "What areas do you serve?",
-    a: "We work throughout the Greater Toronto Area and surrounding regions. If you're outside the GTA & Surrounding areas, get in touch. We may still be able to help.",
+    q: "What areas in Ontario do you serve?",
+    a: "Our general contracting team works throughout Vaughan, Toronto, the Greater Toronto Area, Barrie, and Simcoe County. If you're slightly outside our primary GTA service area, get in touch. We may still be able to manage your build.",
   },
 ];
 
-// ─── ACCORDION ITEM ──────────────────────────────────────────────────────────
+// ─── ACCORDION ITEM (Semantically wrapped in dt/dd) ──────────────────────────
 function FaqItem({ faq, isOpen, onToggle }) {
   const contentRef = useRef(null);
 
   return (
     <div style={{ borderBottom: "1px solid #DDD8D0" }}>
-      <button
-        onClick={onToggle}
-        className="w-full flex items-start justify-between gap-6 text-left py-7 md:py-8 group"
-        aria-expanded={isOpen}
-      >
-        <span
-          className="font-display text-lg md:text-xl font-medium tracking-tight transition-colors"
-          style={{ color: isOpen ? "#C9802A" : "#1A1A1A" }}
+      <dt>
+        <button
+          onClick={onToggle}
+          className="w-full flex items-start justify-between gap-6 text-left py-7 md:py-8 group"
+          aria-expanded={isOpen}
+          aria-controls={`faq-answer-${faq.q.replace(/\s+/g, '-').toLowerCase()}`}
         >
-          {faq.q}
-        </span>
-        <span
-          className="shrink-0 mt-1 transition-transform duration-300 ease-out"
-          style={{
-            transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-            color: isOpen ? "#C9802A" : "#A09080",
-          }}
-        >
-          <Plus size={22} strokeWidth={1.75} />
-        </span>
-      </button>
+          <span
+            className="font-display text-lg md:text-xl font-medium tracking-tight transition-colors"
+            style={{ color: isOpen ? "#C9802A" : "#1A1A1A" }}
+          >
+            {faq.q}
+          </span>
+          <span
+            className="shrink-0 mt-1 transition-transform duration-300 ease-out"
+            style={{
+              transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+              color: isOpen ? "#C9802A" : "#A09080",
+            }}
+          >
+            <Plus size={22} strokeWidth={1.75} />
+          </span>
+        </button>
+      </dt>
 
       {/* Animated expanding panel */}
-      <div
-        className="overflow-hidden transition-all duration-400 ease-out"
+      <dd
+        id={`faq-answer-${faq.q.replace(/\s+/g, '-').toLowerCase()}`}
+        className="overflow-hidden transition-all duration-400 ease-out m-0"
         style={{
           maxHeight: isOpen ? `${contentRef.current?.scrollHeight ?? 0}px` : "0px",
           opacity: isOpen ? 1 : 0,
@@ -70,7 +74,7 @@ function FaqItem({ faq, isOpen, onToggle }) {
             {faq.a}
           </p>
         </div>
-      </div>
+      </dd>
     </div>
   );
 }
@@ -79,6 +83,20 @@ function FaqItem({ faq, isOpen, onToggle }) {
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
 
+  // Generate dynamic Schema Markup for Google Rich Snippets
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a,
+      },
+    })),
+  };
+
   return (
     <section
       id="faq"
@@ -86,6 +104,12 @@ export default function FAQ() {
       className="py-28 md:py-40"
       style={{ backgroundColor: "#F5F2EE" }}
     >
+      {/* Invisible Schema injected directly into the component */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
 
@@ -112,7 +136,7 @@ export default function FAQ() {
                 style={{ color: "#5A5048" }}
               >
                 Still have a question we haven&apos;t covered? Reach out directly and we&apos;re
-                happy to talk through your project.
+                happy to talk through your general contracting or renovation project.
               </p>
 
               <a
@@ -129,9 +153,9 @@ export default function FAQ() {
             </div>
           </div>
 
-          {/* RIGHT: Accordion */}
+          {/* RIGHT: Accordion (Converted to semantic <dl>) */}
           <div className="lg:col-span-8 reveal">
-            <div style={{ borderTop: "1px solid #DDD8D0" }}>
+            <dl style={{ borderTop: "1px solid #DDD8D0" }} className="m-0">
               {faqs.map((faq, i) => (
                 <FaqItem
                   key={i}
@@ -140,7 +164,7 @@ export default function FAQ() {
                   onToggle={() => setOpenIndex(openIndex === i ? null : i)}
                 />
               ))}
-            </div>
+            </dl>
           </div>
 
         </div>

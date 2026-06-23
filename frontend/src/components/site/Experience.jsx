@@ -1,20 +1,21 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 
+// ─── SEO Optimized Copy ──────────────────────────────────────────────
 const metrics = [
   {
     k: "10+",
-    label: "Years on enterprise sites",
-    body: "Hands-on experience as a Site Superintendent on residential and mixed-use developments.",
+    label: "Years in Toronto Construction",
+    body: "Hands-on experience as a Site Superintendent on major residential and mixed-use developments.",
   },
   {
     k: "2000+",
-    label: "Commercial & Residential units managed",
-    body: "Direct oversight of multi-million dollar scopes from foundation through deficiency closeout.",
+    label: "Units & Projects Managed",
+    body: "Direct oversight of multi-million dollar scopes, from structural foundations to luxury interior closeouts.",
   },
   {
     k: "On-Time",
-    label: "Timeline & logistics",
-    body: "Critical-path scheduling, trade coordination, and city inspection handling honed at scale.",
+    label: "General Contracting Logistics",
+    body: "Critical-path scheduling, Vaughan trade coordination, and municipal inspection handling honed at scale.",
   },
 ];
 
@@ -75,32 +76,35 @@ export default function Experience() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
 
           <div className="lg:col-span-5 reveal">
+            {/* Eyebrow */}
             <div className="flex items-center gap-3 mb-6">
               <span className="block w-10 h-px bg-brand-accent" />
               <span
                 className="text-xs tracking-[0.28em] uppercase font-medium"
                 style={{ color: "#8A7D6B" }}
               >
-                Our Roots
+                Our Foundation
               </span>
             </div>
+            
+            {/* H2 Headline - Injected "construction management" for broad search context */}
             <h2
               data-testid="experience-headline"
               className="font-display text-4xl md:text-5xl lg:text-6xl font-medium tracking-tighter leading-[1.05]"
               style={{ color: "#1A1A1A" }}
             >
-              An enterprise pedigree,{" "}
+              Enterprise construction management,{" "}
               <span style={{ color: "#A09080" }}>brought home.</span>
             </h2>
+            
             <p
               className="mt-8 text-lg leading-relaxed max-w-md"
               style={{ color: "#5A5048" }}
             >
-              Sunwest Builds was founded on a decade of work for Canada&apos;s most rigorous developers.
-
+              Sunwest Builds was founded on a decade of rigorous project management for Canada&apos;s top developers.
             </p>
 
-            {/* Closing positioning line — bridges enterprise past to residential present */}
+            {/* Closing positioning line — Fully loaded with Local SEO targets */}
             <div
               className="mt-12 md:mt-16 pt-8"
               style={{ borderTop: "1px solid #D8D4CE" }}
@@ -111,14 +115,14 @@ export default function Experience() {
                 style={{ color: "#1A1A1A" }}
               >
                 Today, that experience is focused entirely on{" "}
-                <span style={{ color: "#C9802A" }}>custom homes and renovations</span>{" "}
-                across the GTA & Surrounding Areas.
+                <span style={{ color: "#C9802A" }}>luxury custom homes and complete structural renovations</span>{" "}
+                across Vaughan, Toronto, and the GTA.
               </p>
             </div>
           </div>
 
-          {/* Metric cards */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-px" style={{ backgroundColor: "#D8D4CE" }}>
+          {/* Metric cards - Converted to a semantic Description List (<dl>) */}
+          <dl className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-px" style={{ backgroundColor: "#D8D4CE" }}>
             {metrics.map((m, i) => (
               <div
                 key={m.label}
@@ -126,32 +130,32 @@ export default function Experience() {
                 className="reveal p-8 md:p-10 flex flex-col justify-start gap-4"
                 style={{ backgroundColor: "#F5F2EE" }}
               >
-                {/* Number */}
-                <span
-                  className="font-display text-5xl md:text-6xl font-medium tracking-tighter leading-none"
+                {/* Number / Value (<dd>) */}
+                <dd
+                  className="font-display text-5xl md:text-6xl font-medium tracking-tighter leading-none m-0"
                   style={{ color: "#1A1A1A" }}
                 >
                   <AnimatedCounter text={m.k} />
-                </span>
+                </dd>
 
-                {/* Label — carries the warm accent now */}
-                <div
+                {/* Term Label (<dt>) */}
+                <dt
                   className="text-[11px] uppercase tracking-[0.22em] font-medium"
                   style={{ color: "#C9802A" }}
                 >
                   {m.label}
-                </div>
+                </dt>
 
                 {/* Divider */}
-                <div className="w-full h-px" style={{ backgroundColor: "#E0DCD6" }} />
+                <div className="w-full h-px" style={{ backgroundColor: "#E0DCD6" }} aria-hidden="true" />
 
-                {/* Body */}
-                <p className="text-sm leading-relaxed" style={{ color: "#5A5048" }}>
+                {/* Body Details (<dd>) */}
+                <dd className="text-sm leading-relaxed m-0" style={{ color: "#5A5048" }}>
                   {m.body}
-                </p>
+                </dd>
               </div>
             ))}
-          </div>
+          </dl>
 
         </div>
       </div>

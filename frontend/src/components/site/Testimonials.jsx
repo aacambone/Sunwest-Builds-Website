@@ -4,8 +4,8 @@ import { Plus } from "lucide-react";
 // ─── SEO OPTIMIZED FAQ DATA ──────────────────────────────────────────────────
 const faqs = [
   {
-    q: "How do you keep custom home projects on schedule and on budget?",
-    a: "We run residential renovations and custom builds with the same discipline used on commercial sites. That means critical-path scheduling, detailed scopes locked in before work begins, and fixed budgets agreed up front. You'll know your timeline and your number before we ever pick up a tool, and we communicate proactively if anything needs to change.",
+    q: "How do you keep whole-home renovations on schedule and on budget?",
+    a: "We run residential remodeling and structural renovations with the same discipline used on commercial sites. That means critical-path scheduling, detailed scopes locked in before work begins, and fixed budgets agreed up front. You'll know your timeline and your number before we ever pick up a tool, and we communicate proactively if anything needs to change.",
   },
   {
     q: "Do you handle building permits and municipal inspections?",
@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: "How is your renovation pricing structured?",
-    a: "After an initial consultation and site assessment, you'll receive a detailed written quote broken down by scope. We believe in transparency: no vague estimates, no surprise charges mid-project. What you sign off on is what you pay for your custom build, barring any changes you request along the way.",
+    a: "After an initial consultation and site assessment, you'll receive a detailed written quote broken down by scope. We believe in transparency: no vague estimates, no surprise charges mid-project. What you sign off on is what you pay for your renovation, barring any changes you request along the way.",
   },
   {
     q: "What areas in Ontario do you serve?",

@@ -178,7 +178,7 @@ export default function Founder() {
             {/* Bio — paragraph 1 */}
             <Reveal delay={60}>
               <p className="text-sm md:text-base leading-relaxed" style={{ color: "#5A5048" }}>
-                Inspired by his late grandfather's legacy in the building industry, Justin founded Sunwest Builds to carry the torch forward, building custom homes with the same care and craftsmanship that defined his grandfather's work. Justin holds an Advanced Diploma in Construction Engineering &amp; Management from
+                Inspired by his late grandfather's legacy in the building industry, Justin founded Sunwest Builds to carry the torch forward, executing whole-home renovations with the same care and craftsmanship that defined his grandfather's work. Justin holds an Advanced Diploma in Construction Engineering &amp; Management from
                 George Brown College and has been working in the Toronto construction sector for{" "}
                 <span style={{ color: "#1A1A1A", fontWeight: 500 }}>over a decade</span>. After
                 graduating, he obtained pivotal roles as a Project Manager and Site Supervisor,
@@ -192,7 +192,7 @@ export default function Founder() {
                 Through many years managing complex, high-stakes projects, Justin has built a great
                 reputation with various consultants, architects, engineers, designers, and local Vaughan sub-trades. This elite network and{" "}
                 <span style={{ color: "#1A1A1A", fontWeight: 500 }}>enterprise-level discipline</span>{" "}
-                have directly contributed to his success in the luxury residential custom home and structural
+                have directly contributed to his success in the luxury remodeling and structural
                 renovation sector across the Greater Toronto Area and Simcoe County.
               </p>
             </Reveal>

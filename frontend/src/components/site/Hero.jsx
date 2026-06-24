@@ -169,12 +169,12 @@ export default function Hero() {
         <div className="reveal flex items-center gap-5 mb-8">
           <img
             src={mainLogo}
-            alt="Sunwest Builds - General Contractors and Custom Home Builders in Vaughan"
+            alt="Sunwest Builds - General Contractors and Whole Home Renovations in Vaughan"
             className="h-20 md:h-24 w-auto object-contain drop-shadow-lg -translate-y-2 md:-translate-y-3"
           />
           <span className="block w-10 md:w-16 h-px" style={{ backgroundColor: "#C9802A" }} />
           <h1 className="text-sm tracking-[0.3em] uppercase font-medium text-white/65 m-0">
-            Custom Home Builders in Vaughan
+            Whole Home Renovations in Vaughan
           </h1>
         </div>
 
@@ -186,7 +186,7 @@ export default function Hero() {
 
         {/* Subtext - Expanded to catch secondary keywords */}
         <p className="reveal mt-8 text-lg md:text-xl leading-relaxed text-white/75 max-w-xl [text-shadow:0_1px_20px_rgba(0,0,0,0.7)]">
-          Bringing over a decade of development management to premium custom residential builds, high-end kitchen remodeling, and structural renovations across Vaughan and Toronto.
+          Bringing over a decade of enterprise project management to luxury whole-home remodeling, high-end interiors, and complex structural renovations across Vaughan and Toronto.
         </p>
 
         {/* CTAs */}
@@ -226,7 +226,7 @@ export default function Hero() {
             ["10+", "Years On Site"],
             ["2000+", "Units Managed"],
             ["Precision", "Quality Management"],
-            ["Custom", "Residential Focus"],
+            ["Luxury", "Remodeling Focus"],
           ].map(([value, label]) => (
             <div key={label} className="flex flex-col">
               <span className="block w-6 h-[2px] mb-4" style={{ backgroundColor: "#C9802A" }} />

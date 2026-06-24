@@ -115,7 +115,7 @@ export default function Experience() {
                 style={{ color: "#1A1A1A" }}
               >
                 Today, that experience is focused entirely on{" "}
-                <span style={{ color: "#C9802A" }}>luxury custom homes and complete structural renovations</span>{" "}
+                <span style={{ color: "#C9802A" }}>luxury remodeling and whole-home structural renovations</span>{" "}
                 across Vaughan, Toronto, and the GTA.
               </p>
             </div>

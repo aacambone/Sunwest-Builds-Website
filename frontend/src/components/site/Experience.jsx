@@ -19,47 +19,80 @@ const metrics = [
   },
 ];
 
+// ─── SEO-Optimized Animated Counter ──────────────────────────────────────────
 const AnimatedCounter = ({ text }) => {
-  const [count, setCount] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
-  const counterRef = useRef(null);
   const match = useMemo(() => text.match(/^(\D*)(\d+)(\D*)$/), [text]);
+  const target = match ? parseInt(match[2], 10) : 0;
+
+  // Initialize with the TARGET number so prerender captures the real stats
+  const [count, setCount] = useState(target);
+  const counterRef = useRef(null);
 
   useEffect(() => {
     if (!match) return;
+
+    // Block animation if react-snap is crawling
+    if (typeof window !== "undefined" && window.navigator.userAgent === "ReactSnap") {
+      return;
+    }
+
     let hasTriggered = false;
-    const target = parseInt(match[2], 10);
     const duration = 2000;
+    let currentObserver;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasTriggered) {
-          hasTriggered = true;
-          setHasStarted(true);
-          let startTimestamp = null;
-          const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-            setCount(Math.floor(easeOut * target));
-            if (progress < 1) window.requestAnimationFrame(step);
-          };
-          window.requestAnimationFrame(step);
-          if (counterRef.current) observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
+    const startObserving = () => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && !hasTriggered) {
+            hasTriggered = true;
 
-    if (counterRef.current) observer.observe(counterRef.current);
-    return () => observer.disconnect();
-  }, [match]);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+              if (!startTimestamp) startTimestamp = timestamp;
+              const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+              const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+
+              setCount(Math.floor(easeOut * target));
+
+              if (progress < 1) {
+                window.requestAnimationFrame(step);
+              } else {
+                setCount(target);
+              }
+            };
+            window.requestAnimationFrame(step);
+
+            if (counterRef.current) observer.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      if (counterRef.current) observer.observe(counterRef.current);
+      return observer;
+    };
+
+    const handleLoad = () => {
+      currentObserver = startObserving();
+    };
+
+    if (document.readyState === "complete") {
+      currentObserver = startObserving();
+    } else {
+      window.addEventListener("load", handleLoad, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("load", handleLoad);
+      if (currentObserver) currentObserver.disconnect();
+    };
+  }, [match, target]);
 
   if (!match) return <span>{text}</span>;
 
   return (
     <span ref={counterRef}>
-      {match[1]}{hasStarted ? count : 0}{match[3]}
+      {match[1]}{count}{match[3]}
     </span>
   );
 };

@@ -37,7 +37,7 @@ export default function Contact() {
     setSubmitting(true);
     try {
       await axios.post(`${API}/contact`, form);
-      toast.success("Thanks — we'll be in touch within 24 hours.");
+      toast.success("Thanks. We'll be in touch within 24 hours.");
       setForm(initial);
     } catch (err) {
       const detail =
